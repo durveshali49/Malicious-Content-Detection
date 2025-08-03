@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malicious Content Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Malicious Content Detector</h1>
+            <p>Scan network logs for potential security threats in real-time</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <h2>File Scan</h2>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="file-upload" accept=".log,.txt">
+                    <label for="file-upload" class="file-upload-label">
+                        <span>Choose Log File</span>
+                    </label>
+                    <button id="scan-file-btn" class="scan-btn">Scan File</button>
+                </div>
+                <div id="file-name"></div>
+            </section>
+
+            <section class="text-section">
+                <h2>Text Scan</h2>
+                <textarea id="text-input" placeholder="Paste log content here for scanning..."></textarea>
+                <button id="scan-text-btn" class="scan-btn">Scan Text</button>
+            </section>
+
+            <section class="results-section">
+                <h2>Scan Results</h2>
+                <div id="results-container">
+                    <div id="results-summary"></div>
+                    <div id="threats-list"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Malicious Content Detector &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

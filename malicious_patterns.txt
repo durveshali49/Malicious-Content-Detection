@@ -1,0 +1,36 @@
+# Malicious patterns to detect
+# Format: One pattern per line, Python regex supported
+# Comments start with #
+# Case insensitive
+
+# SQL Injection patterns
+SELECT\s+\*\s+FROM
+UNION\s+SELECT
+DROP\s+TABLE
+DELETE\s+FROM
+# XSS patterns
+<script>
+javascript:
+eval\s*\(
+on\w+\s*=
+<img
+alert\(
+
+# Command injection patterns
+system\s*\(
+exec\s*\(
+passthru\s*\(
+shell_exec
+cmd\.exe
+/bin/sh
+/bin/bash
+
+# File inclusion
+include\s*\(
+require\s*\(
+include_once\s*\(
+file_get_contents
+
+# Path traversal
+\.\./
+\.\.\\\\

