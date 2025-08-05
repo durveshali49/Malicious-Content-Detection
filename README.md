@@ -4,12 +4,12 @@ A Python application to scan static log or packet data files for malicious words
 
 ## Features
 
-- Scan log files for malicious content patterns
-- Customizable pattern definitions
-- Detailed threat reporting with line numbers
-- Support for regex patterns
-- Case-insensitive matching
-- Command-line interface
+- Scan log files for malicious content patterns.
+- Customizable pattern definitions.
+- Detailed threat reporting with line numbers.
+- Support for regex patterns.
+- Case-insensitive matching.
+- Command-line interface.
 
 ## Installation
 
@@ -111,3 +111,4 @@ Feel free to fork this project and submit pull requests with improvements or add
 ## License
 
 This project is open-source and available under the MIT License.
+
